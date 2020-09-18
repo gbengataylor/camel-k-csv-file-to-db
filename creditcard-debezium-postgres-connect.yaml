@@ -1,0 +1,23 @@
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaConnect
+metadata:
+ annotations:
+   strimzi.io/use-connector-resources: 'true'
+ name: creditcard-events
+spec:
+ bootstrapServers: 'odh-message-bus-kafka-bootstrap:9092'
+ config:
+   config.storage.topic: creditcard-events-cluster-configs
+   group.id: creditcard-events-cluster
+   offset.storage.topic: creditcard-events-cluster-offsets
+   status.storage.topic: creditcard-events-cluster-status
+ image: quay.io/therealcabrera/debezium-image
+ replicas: 1
+ version: 2.5.0
+ template:
+   deployment:
+     metadata:
+       labels:
+         app.kubernetes.io/part-of: data-integration
+       annotations:
+         app.openshift.io/connects-to: odh-message-bus-kafka,postgresql
