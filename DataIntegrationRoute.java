@@ -37,12 +37,11 @@ public class DataIntegrationRoute extends RouteBuilder {
      .process(exchange -> {
         String input = (String) exchange.getIn().getBody();
        // System.out.println("Input to be persisted : " + input);
-        String insertQuery = "INSERT INTO credit_card_transactions values ( " + input+")";
+        String insertQuery = "INSERT INTO cct values ( " + input+")";
        // System.out.println("Insert Query is : " + insertQuery);
         exchange.getIn().setBody(insertQuery);
          })
       .log("${body}")
        .to("jdbc:myDataSource");
-
     }
 }
