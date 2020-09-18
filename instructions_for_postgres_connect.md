@@ -1,6 +1,10 @@
-Open it and modify (ideally do a oc write of the file then mount on boot
+Open it and modify 
+(ideally do a oc write of the file then mount on boot
+
 wal_level=logical
+
 max_wal_senders=1
+
 max_replication_slots=1
 
 
