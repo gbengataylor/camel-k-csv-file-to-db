@@ -1,0 +1,32 @@
+apiVersion: kafka.strimzi.io/v1alpha1
+kind: KafkaConnector
+metadata:
+ name: creditcard-events-outbox
+ labels:
+   strimzi.io/cluster: creditcard-events
+spec:
+ class: io.debezium.connector.postgresql.PostgresConnector
+ tasksMax: 1
+ config:
+   database.dbname: creditcard
+   database.hostname: postgresql
+   database.password: $passwordchangeme
+   database.port: 5432
+   database.server.name: creditcard
+   database.user: debezium
+   database.whitelist: public.outbox_events
+   database.history.kafka.bootstrap.servers: "odh-message-bus-kafka-bootstrap:9092"
+   database.history.kafka.topic: "dbhistory.cct"
+   plugin.name: pgoutput
+   tombstones.on.delete : false
+   transforms: outbox
+   transforms.outbox.type: io.debezium.transforms.outbox.EventRouter
+   transforms.outbox.route.topic.replacement: "outbox.${routedByValue}.events"
+   transforms.outbox.table.field.event.id: event_id
+   transforms.outbox.table.field.event.key: aggregate_id
+   transforms.outbox.table.field.event.type: event_type
+   transforms.outbox.table.field.event.payload.id: aggregate_id
+   transforms.outbox.route.by.field: aggregate_type
+   transforms.outbox.table.field.payload: payload
+   transforms.outbox.table.field.event.payload: payload
+   transforms.outbox.table.fields.additional.placement: "event_id:envelope:eventId,aggregate_id:envelope:aggregateId,aggregate_type:envelope:aggregateType"
