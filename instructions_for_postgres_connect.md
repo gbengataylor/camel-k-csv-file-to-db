@@ -24,7 +24,7 @@ Add to config map then mount on startup
 oc create configmap db-config-postgresql-conf --from-file=postgresql.conf
 ```
 
-postgres deployment config
+postgres deployment config (need to fix this)
 ```yaml
     spec:
       volumes:
