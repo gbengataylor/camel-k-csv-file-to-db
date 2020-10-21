@@ -1,4 +1,4 @@
-CREATE TABLE credit_card_transactions (
+CREATE TABLE cct (
     time        real,
     V1       float8,
     V2       float8,
@@ -34,7 +34,7 @@ class real
 );
 
 /* CREATE USER debezium WITHPASWORD "password" SUPERUSER; */
-CREATE USER debezium WITH PASWORD 'password' REPLICATION LOGIN;
+CREATE USER debezium WITH PASSWORD 'password' REPLICATION LOGIN;
 /*  CREATE ROLE debezium1 with <SOMEROLE>;  
  GRANT debezium1 to <Someuser>;
  */
