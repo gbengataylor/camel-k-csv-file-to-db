@@ -2,6 +2,7 @@
 
 ```
 postgres_pod=$(oc get pods  -lname=postgresql | grep postgresql| awk '{ print $1}')
+oc rsh $postgres_pod
 psql -d creditcard -c 'SHOW config_file'
 oc rsync $postgres_pod:/var/lib/pgsql/data/userdata/postgresql.conf .
 ```
